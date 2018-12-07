@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+
+{% block title %}{{ object.ticker.upper }} Price Periods{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'stocks:companies-list' %}">Companies</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ company.get_absolute_url }}">
+            {{ company.ticker.upper }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Periods</li>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ company.ticker.upper }} Stock {{ analytics.price_type.capitalize }} Price Periods</h2>
+    <br>
+    
+    <div class="alert alert-light" role="alert">
+        {{ msg }}
+    </div>
+    
+    <br>
+    {% if analytics %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date 1</th>
+                <th scope="col">{{ analytics.price_type.capitalize }} Price 1</th>
+                <th scope="col">Date 2</th>
+                <th scope="col">{{ analytics.price_type.capitalize }} Price 2</th>
+                <th scope="col">Difference</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for period in analytics.periods %}
+            <tr>
+                <td><b>{{ period.date1 }}</b></td>
+                <td>{{ period.price1 }}</td>
+                <td><b>{{ period.date2 }}</b></td>
+                <td>{{ period.price2 }}</td>
+                <td><b>{{ period.diff }}</b></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

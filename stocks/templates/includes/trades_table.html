@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Insider</th>
+            <th scope="col">Relation</th>
+            <th scope="col">Last Date</th>
+            <th scope="col">Transaction Type</th>
+            <th scope="col">Owner Type</th>
+            <th scope="col">Shares Traded</th>
+            <th scope="col">Last Price</th>
+            <th scope="col">Shares Held</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trade in trades %}
+        <tr>
+            <th scope="row">
+                <a href="{% url 'stocks:insider-trades-list' company.ticker trade.insider.slug %}">
+                    {{ trade.insider }}
+                </a>
+            </th>
+            <td>{{ trade.relation }}</td>
+            <td>{{ trade.last_date }}</td>
+            <td>{{ trade.transaction_type }}</td>
+            <td>{{ trade.owner_type }}</td>
+            <td>{{ trade.held_shares }}</td>
+            <td>{{ trade.last_price }}</td>
+            <td>{{ trade.traded_shares }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

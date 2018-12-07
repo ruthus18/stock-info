@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+
+{% block title %}Analytics for {% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'stocks:companies-list' %}">Companies</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        <a href="{{ company.get_absolute_url }}">
+            {{ company.ticker.upper }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Analytics</li>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ company.ticker.upper }} Stock Prices Analytics</h2>
+    <br>
+    
+    <div class="alert alert-light" role="alert">
+        {{ msg }}
+    </div>
+    
+    <br>
+    {% if analytics %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">{{ analytics.start_obj.created_date }}</th>
+                <th scope="col">{{ analytics.end_obj.created_date }}</th>
+                <th scope="col">Difference</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Open Price</th>
+                <td>{{ analytics.start_obj.open_price }}</td>
+                <td>{{ analytics.end_obj.open_price }}</td>
+                <td><b>{{ analytics.open_price }}</b></td>
+            </tr>
+            <tr>
+                <th scope="row">Close Price</th>
+                <td>{{ analytics.start_obj.close_price }}</td>
+                <td>{{ analytics.end_obj.close_price }}</td>
+                <td><b>{{ analytics.close_price }}</b></td>
+            </tr>
+            <tr>
+                <th scope="row">High Price</th>
+                <td>{{ analytics.start_obj.high_price }}</td>
+                <td>{{ analytics.end_obj.high_price }}</td>
+                <td><b>{{ analytics.high_price }}</b></td>
+            </tr>
+            <tr>
+                <th scope="row">Low Price</th>
+                <td>{{ analytics.start_obj.low_price }}</td>
+                <td>{{ analytics.end_obj.low_price }}</td>
+                <td><b>{{ analytics.low_price }}</b></td>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

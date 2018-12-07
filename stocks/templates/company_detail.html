@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+
+
+{% block title %}Companies{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'stocks:companies-list' %}">Companies</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ object.ticker.upper }}</li>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ object.ticker.upper }} Stock Pices Info</h2>
+
+    <div class="alert alert-light" role="alert">
+        <a href="{% url 'stocks:trades-list' object.ticker %}"><b>Insider Trades</b></a> |
+        <a href="{% url 'stocks:stock-analytics' object.ticker %}"><b>Prices Analytics</b></a> |
+        <a href="{% url 'stocks:stock-delta' object.ticker %}"><b>Prices Delta</b></a> |
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Open</th>
+                <th scope="col">High</th>
+                <th scope="col">Low</th>
+                <th scope="col">Close/Last</th>
+                <th scope="col">Volume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in object.prices.all %}
+            <tr>
+                <th scope="row">{{ day.created_date }}</th>
+                <td>{{ day.open_price }}</td>
+                <td>{{ day.high_price }}</td>
+                <td>{{ day.low_price }}</td>
+                <td>{{ day.close_price }}</td>
+                <td>{{ day.volume }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
